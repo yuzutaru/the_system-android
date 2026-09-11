@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.TheSystem" parent="android:Theme.Material.NoActionBar">
+        <item name="android:windowBackground">@color/the_system_background</item>
+        <item name="android:statusBarColor">@color/the_system_background</item>
+        <item name="android:navigationBarColor">@color/the_system_surface</item>
+    </style>
+</resources>

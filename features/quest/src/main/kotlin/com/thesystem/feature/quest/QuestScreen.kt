@@ -1,0 +1,30 @@
+package com.thesystem.feature.quest
+
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextAlign
+import com.thesystem.core.designsystem.TheSystemColors
+
+@Composable
+fun QuestScreen(modifier: Modifier = Modifier) {
+    Column(
+        modifier = modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center,
+    ) {
+        Text(
+            text = "No Active Quests",
+            color = TheSystemColors.TextPrimary,
+        )
+        Text(
+            text = "Create a routine to begin your grind.",
+            color = TheSystemColors.TextSecondary,
+            textAlign = TextAlign.Center,
+        )
+    }
+}
