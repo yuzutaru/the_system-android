@@ -3,6 +3,9 @@ package com.thesystem.core.navigation
 import kotlinx.serialization.Serializable
 
 @Serializable
+data object HomeRoute
+
+@Serializable
 data object WorkoutRoute
 
 @Serializable

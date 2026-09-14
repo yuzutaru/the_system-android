@@ -53,10 +53,11 @@ dependencies {
     implementation(project(":core:designsystem"))
     implementation(project(":core:navigation"))
 
-    implementation(project(":features:workout"))
-    implementation(project(":features:stats"))
-    implementation(project(":features:quest"))
-    implementation(project(":features:character"))
+    implementation(project(":workout"))
+    implementation(project(":stats"))
+    implementation(project(":quest"))
+    implementation(project(":character"))
+    implementation(project(":home"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.activity.compose)

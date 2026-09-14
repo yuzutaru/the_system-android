@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.List
 import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Icon
@@ -19,19 +20,22 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.navigation.NavDestination.Companion.hierarchy
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.thesystem.core.designsystem.TheSystemColors
 import com.thesystem.core.navigation.CharacterRoute
+import com.thesystem.core.navigation.HomeRoute
 import com.thesystem.core.navigation.QuestRoute
 import com.thesystem.core.navigation.StatsRoute
 import com.thesystem.core.navigation.WorkoutRoute
-import com.thesystem.feature.character.CharacterScreen
-import com.thesystem.feature.quest.QuestScreen
-import com.thesystem.feature.stats.StatsScreen
-import com.thesystem.feature.workout.presentation.WorkoutScreen
+import com.thesystem.character.CharacterScreen
+import com.thesystem.home.HomeScreen
+import com.thesystem.quest.QuestScreen
+import com.thesystem.stats.StatsScreen
+import com.thesystem.workout.presentation.WorkoutScreen
 import kotlin.reflect.KClass
 
 private data class TopLevelDestination(
@@ -42,6 +46,7 @@ private data class TopLevelDestination(
 )
 
 private val destinations = listOf(
+    TopLevelDestination(HomeRoute, HomeRoute::class, "Home", Icons.Default.Home),
     TopLevelDestination(WorkoutRoute, WorkoutRoute::class, "Log", Icons.AutoMirrored.Filled.List),
     TopLevelDestination(QuestRoute, QuestRoute::class, "Quests", Icons.Default.Star),
     TopLevelDestination(StatsRoute, StatsRoute::class, "Stats", Icons.Default.Favorite),
@@ -66,11 +71,7 @@ fun AppRoot(viewModel: AppViewModel = hiltViewModel()) {
                     NavigationBarItem(
                         selected = selected,
                         onClick = {
-                            navController.navigate(destination.route) {
-                                popUpTo(navController.graph.startDestinationId) { saveState = true }
-                                launchSingleTop = true
-                                restoreState = true
-                            }
+                            navController.navigateToTab(destination.route)
                         },
                         icon = { Icon(destination.icon, contentDescription = destination.label) },
                         label = { Text(destination.label) },
@@ -81,13 +82,28 @@ fun AppRoot(viewModel: AppViewModel = hiltViewModel()) {
     ) { padding ->
         NavHost(
             navController = navController,
-            startDestination = WorkoutRoute,
+            startDestination = HomeRoute,
             modifier = Modifier.padding(padding),
         ) {
+            composable<HomeRoute> {
+                HomeScreen(
+                    onLogWorkout = { navController.navigateToTab(WorkoutRoute) },
+                    onSeeStats = { navController.navigateToTab(StatsRoute) },
+                    onBuildCharacter = { navController.navigateToTab(CharacterRoute) },
+                )
+            }
             composable<WorkoutRoute> { WorkoutScreen() }
             composable<QuestRoute> { QuestScreen() }
             composable<StatsRoute> { StatsScreen(character = character) }
             composable<CharacterRoute> { CharacterScreen(character = character) }
         }
+    }
+}
+
+private fun NavHostController.navigateToTab(route: Any) {
+    navigate(route) {
+        popUpTo(graph.startDestinationId) { saveState = true }
+        launchSingleTop = true
+        restoreState = true
     }
 }

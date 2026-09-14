@@ -8,17 +8,17 @@ Part of the [The System workspace](https://github.com/yuzutaru/the_system). Game
 
 ## Architecture — modular feature architecture
 
-Thin `:app` shell + one Gradle module per feature + shared `core` modules. Features
-never depend on each other.
+Thin `:app` shell + one top-level Gradle module per feature + shared `core` modules.
+Features never depend on each other.
 
 ```
 the_system-android/
 ├── app/                    thin shell: Hilt graph + Compose Nav host
-├── features/
-│   ├── workout/            reference vertical slice (Compose + ViewModel + use case)
-│   ├── stats/
-│   ├── quest/
-│   └── character/
+├── home/                   landing / onboarding screen
+├── workout/                reference vertical slice (Compose + ViewModel + use case)
+├── stats/
+├── quest/
+├── character/
 ├── core/
 │   ├── domain/             pure Kotlin: entities, formulas, repository interfaces
 │   ├── data/               repository implementations + Hilt bindings
@@ -28,8 +28,9 @@ the_system-android/
 └── gradle/libs.versions.toml
 ```
 
-Dependency direction: `features/* → core/domain` (interfaces). `core/data` provides the
-implementations and binds them with Hilt. `app` wires everything together.
+Dependency direction: `home|workout|stats|quest|character → core/domain` (interfaces).
+`core/data` provides the implementations and binds them with Hilt. `app` wires
+everything together.
 
 ## Requirements
 

@@ -25,12 +25,12 @@ Use `--no-configuration-cache` if you hit configuration-cache issues.
 | `:core:database` | Room entities, DAOs, `TheSystemDatabase` |
 | `:core:designsystem` | `TheSystemColors`, `Attribute.tint`, `StatBar` |
 | `:core:navigation` | `@Serializable` route objects |
-| `:features:<name>` | `presentation/` (Compose + ViewModel) + use cases |
+| `:home`, `:workout`, `:quest`, `:stats`, `:character` | `presentation/` (Compose + ViewModel) + use cases |
 
 ## Rules
 
-- `features/*` may depend on `core:domain` and `core:designsystem` only — **never on
-  another feature**.
+- `:workout`, `:quest`, `:stats`, `:character` may depend on `core:domain` and
+  `core:designsystem` only — **never on another feature**.
 - `core:domain` is a pure JVM module with no Android dependencies.
 - All versions go in `gradle/libs.versions.toml`; never hardcode versions.
 - Version-catalog accessors use dots: `libs.compose.ui.tooling`, not `libs.compose.ui-tooling`.
